@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Berr • Neon Pulse Warna Beda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0b;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; padding: 24px 16px; color: white;
+            position: relative;
+        }
+
+        .video-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            object-fit: cover; z-index: -2; pointer-events: none;
+        }
+
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 440px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* HEADER */
+        .avatar {
+            width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.5); margin: 0 auto 14px; display: block;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        .username {
+            font-size: 32px; font-weight: 800; text-align: center;
+            color: white; margin-bottom: 4px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.9), 0 0 40px #a855f7;
+        }
+        .subtitle {
+            font-size: 15px; text-align: center; color: white;
+            margin-bottom: 24px; text-transform: uppercase; letter-spacing: 5px;
+            font-weight: 600; text-shadow: 0 0 15px black;
+        }
+
+        /* SOCIAL ICONS */
+        .social-row { display: flex; justify-content: center; gap: 28px; margin-bottom: 36px; }
+        .social-icon {
+            display: flex; align-items: center; justify-content: center;
+            width: 56px; height: 56px; background: rgba(255,255,255,0.15);
+            border-radius: 50%; backdrop-filter: blur(8px); color: white;
+            font-size: 30px; border: 1.5px solid rgba(255,255,255,0.4);
+            text-decoration: none; transition: 0.2s;
+        }
+
+        /* ===== SECTION TITLE - PUTIH BERSIH ===== */
+        .section-title {
+            text-align: center;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: white;
+            margin: 36px 0 24px;
+            /* HANYA GLOW PUTIH TIPIS, TIDAK BERWARNA */
+            text-shadow: 0 0 15px rgba(255,255,255,0.5);
+        }
+
+        /* ===== BASE NEON PULSE ===== */
+        .card-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 18px;
+        }
+
+        .link-card {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: #fff;
+            border-width: 3px;
+            border-style: solid;
+            box-shadow: 
+                0 0 10px var(--neon-color),
+                inset 0 0 10px var(--neon-color);
+            animation: neon-idle 2s ease-in-out infinite;
+            
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 5;
+        }
+
+        .link-card:hover {
+            background: rgba(0, 0, 0, 0.3);
+            border-width: 3px;
+            border-style: solid;
+            box-shadow: 
+                0 0 20px var(--neon-color),
+                0 0 40px var(--neon-color),
+                0 0 60px var(--neon-color),
+                0 0 80px var(--neon-color),
+                inset 0 0 20px #fff;
+            animation: neon-pulse 0.1s ease-in-out infinite;
+            transform: scale(1.02);
+        }
+
+        /* WARNA BEDA TIAP CARD */
+        .card-1 {
+            --neon-color: #00ffff;
+            border-color: #00ffff;
+        }
+        .card-2 {
+            --neon-color: #00ff88;
+            border-color: #00ff88;
+        }
+        .card-3 {
+            --neon-color: #ffaa00;
+            border-color: #ffaa00;
+        }
+
+        .card-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            object-fit: cover;
+            background: rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .card-title {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 5px black;
+            line-height: 1.4;
+            color: white;
+        }
+
+        .footer {
+            margin-top: 48px;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 24px;
+            letter-spacing: 2px;
+        }
+
+        @keyframes neon-idle {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 10px var(--neon-color),
+                    inset 0 0 10px var(--neon-color);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 15px var(--neon-color),
+                    inset 0 0 15px var(--neon-color);
+            }
+        }
+
+        @keyframes neon-pulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 20px var(--neon-color),
+                    0 0 40px var(--neon-color),
+                    0 0 60px var(--neon-color),
+                    0 0 80px var(--neon-color),
+                    inset 0 0 20px #fff;
+            }
+            50% { 
+                box-shadow: 
+                    0 0 30px var(--neon-color),
+                    0 0 50px var(--neon-color),
+                    0 0 70px var(--neon-color),
+                    0 0 100px var(--neon-color),
+                    inset 0 0 30px #fff;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container { max-width: 100%; }
+            .card-title { font-size: 13px; }
+            .card-logo { width: 44px; height: 44px; }
+        }
+    </style>
+</head>
+<body>
+
+    <video class="video-bg" autoplay loop muted playsinline>
+        <source src="https://files.catbox.moe/lnqv15.mp4" type="video/mp4">
+    </video>
+    
+    <div class="overlay"></div>
+
+    <div class="container">
+
+        <img src="https://ucarecdn.com/bd541d2b-8e05-4fc3-be6e-18f3a2f4b4ff/IMG-20260212-WA0014.jpg" 
+             alt="Berr" 
+             class="avatar"
+             onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Berr&size=90&background=a855f7&color=fff';">
+
+        <div class="username">Berr</div>
+        <div class="subtitle">Info Berr</div>
+
+        <div class="social-row">
+            <a href="https://wa.me/62895401050187" class="social-icon" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.tiktok.com/@bercantfly8" class="social-icon" target="_blank"><i class="fab fa-tiktok"></i></a>
+        </div>
+
+        <!-- SECTION TITLE - PUTIH BERSIH -->
+        <div class="section-title">GRUP JB WHATSAPP</div>
+
+        <!-- CARD 1 - CYAN -->
+        <div class="card-wrapper">
+            <a href="https://chat.whatsapp.com/GOR4It7cGf9BIBZreGF9qg" class="link-card card-1" target="_blank">
+                <img src="https://ucarecdn.com/900fe43b-f2ff-43b0-aceb-b21ecbbd50a3/Screenshot_2026_0212_153030.png" alt="JB STK" class="card-logo">
+                <span class="card-title">JB STK || ALL GAME BY BERR</span>
+            </a>
+        </div>
+
+        <!-- CARD 2 - HIJAU -->
+        <div class="card-wrapper">
+            <a href="https://chat.whatsapp.com/BCqJemxpmMN7vFYGsxHwfs" class="link-card card-2" target="_blank">
+                <img src="https://ucarecdn.com/db4b4063-e8fc-4fdd-ae04-cf7158ff3a8b/Screenshot_2026_0212_145902.png" alt="JB STK X FII" class="card-logo">
+                <span class="card-title">JB STK || ALL GAME BY BERR STORE X FII STORE</span>
+            </a>
+        </div>
+
+        <!-- CARD 3 - KUNING -->
+        <div class="card-wrapper">
+            <a href="https://ucarecdn.com/8135dfa9-c7ba-4f7c-808e-6595e62250ca/IMG-20260212-WA0007.jpg" class="link-card card-3" target="_blank">
+                <img src="https://ucarecdn.com/8135dfa9-c7ba-4f7c-808e-6595e62250ca/IMG-20260212-WA0007.jpg" 
+                     alt="QRIS" 
+                     class="card-logo"
+                     onerror="this.onerror=null; this.src='https://via.placeholder.com/48x48/ffaa00/ffffff?text=QRIS';">
+                <span class="card-title">LINK QRIS PEMBAYARAN</span>
+            </a>
+        </div>
+
+        <div class="footer">© Berr • Info Berr</div>
+    </div>
+
+</body>
+</html>
